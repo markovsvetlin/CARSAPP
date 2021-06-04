@@ -1,37 +1,49 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 import Search from './Search'
-
-
-
-
+import { useState } from 'react'
+import { useMediaQuery } from 'react-responsive';
+import RightNav from './RightNav';
 const Appbar = () => {
-   
-    return ( 
-        <div>
+    const [open, setOpen] = useState(false)
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' });
+
+    return !isMobile ? (
+      
             <Container>
-            <Logo>Premium CAR</Logo>
-            <MenuContainer>
-            <Link href='/'>
-                Home
+                <Logo>Premium CAR</Logo>
+                <MenuContainer>
+                    <Link href='/'>
+                        Home
             </Link>
-            <Link href='/Recipes'>
-                Recipes
+                    <Link href='/Recipes'>
+                        Recipes
             </Link>
-            <Link href='/Article'>
-                Article
+                    <Link href='/Article'>
+                        Article
             </Link>
-            <Link href='/Contact'>
-                Contact
+                    <Link href='/Contact'>
+                        Contact
             </Link>
-            <Link href='/Purchase'>
-                Purchase
+                    <Link href='/Purchase'>
+                        Purchase
             </Link>
-            </MenuContainer>
-            <Search/>
+                </MenuContainer>
+                
+                <Search />
 
             </Container>
-        </div>
+        
+    ) : (
+        <Container>
+            <Logo>Premium CAR</Logo>
+            <MenuButton open={open} onClick={() => setOpen(!open)}>
+                <div />
+                <div />
+                <div />
+            </MenuButton>
+            <RightNav setOpen={setOpen} open={open} />
+        </Container>
     )
 }
 
@@ -41,20 +53,28 @@ export default Appbar
 
 
 const Container = styled.div`
+width:100%;
 display:flex;
-justify-content:space-around;
+justify-content:space-evenly;
 align-items:center;
 background-color:black;
 height:90px;
-
+@media (max-width: 600px) {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    position:fixed;
+    z-index:3;
+   }
 
 `
 const Logo = styled.h3`
-
+    padding-left:30px;
 `
 const MenuContainer = styled.div`
 display:flex;
-
+width:100%;
+justify-content:center;
 
 a{
     margin:10px;
@@ -62,3 +82,35 @@ a{
     color: white;
 }
 `
+const MenuButton = styled.div`
+width: 2rem;
+height: 2rem;
+position: fixed;
+top: 15px;
+right: 20px;
+z-index: 20;
+display: flex;
+    justify-content: space-around;
+    flex-flow: column nowrap;
+    padding:10px;
+
+div {
+    width: 2rem;
+    height: 0.25rem;
+    background-color: white;
+    border-radius: 10px;
+    transform-origin: 1px;
+    transition: all 0.3s linear;
+    &:nth-child(1) {
+        transform: ${({ open }) => open ? 'rotate(45deg)' : 'rotate(0)'};
+    }
+    &:nth-child(2) {
+        transform: ${({ open }) => open ? 'translateX(100%)' : 'translateX(0)'};
+        opacity: ${({ open }) => open ? 0 : 1};
+    }
+    &:nth-child(3) {
+        transform: ${({ open }) => open ? 'rotate(-45deg)' : 'rotate(0)'};
+    }
+}
+`;
+

@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 
 
-const Post = ({image}) => {
-    console.log(image)
+const Post = ({image, text}) => {
+    
     return (
        <PostContainer>
-           <span>Vehicle</span>
-           <img src={image.urls.small} />
+        <img src={image.urls.small} />
+        <div className='LeftSide'>
        <span>Rickie Baroch - June 6, 2019</span>
-       <p>Lbasdasdas das das da d asd asd asd asdsad asd sa</p>
-       
+       <span>Vehicle</span>
+       <p>Lbasdasdas das das da d asd asd asd </p>
+       <p>{text}</p>
+       </div>
+      
        </PostContainer>
             
         
@@ -17,8 +20,7 @@ const Post = ({image}) => {
 }
 
 const PostContainer = styled.div`
-position: relative;
-
+position:relative
 `
 
 

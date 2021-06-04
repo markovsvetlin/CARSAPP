@@ -8,6 +8,7 @@ const Layout = ({children}) => {
             <Appbar />
             {children}
             <style jsx global>{`
+            
         body {
           margin: 0;
           padding: 0;
