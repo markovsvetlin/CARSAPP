@@ -9,12 +9,13 @@ import Footer from "../comps/Footer";
 const Home = ({ images }) => {
   console.log(images);
   const imagesArr = images.results;
-  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
+  const isPhone = useMediaQuery({ query: "(max-width: 600px)" });
   const textContent =
     "dasdsd asd dsadsad sad sad asd sad asd asdasd asdasdqweqwe qwe qwe qwf rsd qawd qw  das dsa dsa dsa dsad sad asd asd asd asd sd sad asd saasd asd sad asd asd asd as dasd asd asd asd asd sad a";
   return (
     <>
-      {!isMobile ? (
+      {!isPhone ? (
         <PrimarySection>
           <PrimaryPost>
             {imagesArr.slice(4, 5).map((image) => {
@@ -39,7 +40,7 @@ const Home = ({ images }) => {
         {!isMobile && <SideBar text={textContent} images={imagesArr} />}
         <Pagination />
       </RestContent>
-      {!isMobile && <Carousel images={imagesArr} />}
+      {!isPhone && <Carousel images={imagesArr} />}
       <Footer images={imagesArr} />
     </>
   );
@@ -62,12 +63,13 @@ const PrimarySection = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr;
-  grid-gap: 30px;
-  margin: 30px 300px 50px 300px;
+  grid-gap: 1.5em;
+  margin: 1.875em 14.75em 7.125em 14.75em;
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     margin: 10px;
+    width: 100%;
   }
 `;
 const PrimaryPost = styled.div`
@@ -75,37 +77,36 @@ const PrimaryPost = styled.div`
   width: 100%;
   img {
     width: 100%;
-    height: 630px;
+    height: 35.5em;
     object-fit: cover;
   }
   span {
     position: absolute;
     color: white;
-    top: 30px;
-    left: 30px;
-    font-size: 16px;
+    top: 1.5em;
+    left: 1.5em;
+    font-size: 1em;
     background-color: #4267b2;
-    padding: 1px 10px;
-    border-radius: 10px;
+    padding: 1px 0.625em;
+    border-radius: 0.625em;
 
     &:nth-child(1) {
       position: absolute;
-      left: 20px;
-      padding: 5px;
+      left: 1.25em;
+      padding: 0.375em;
       color: white;
-      font-size: 12px;
-      top: 530px;
+      font-size: 0.75em;
+      top: 34.333em;
       background-color: transparent;
     }
   }
 
   p {
-    position: absolute;
-    bottom: 2px;
-    padding: 13px;
-    line-height: 26px;
-    left: 10px;
-    font-size: 20px;
+    margin-top: -4.1em;
+    padding: 0.813em;
+    line-height: 1.2em;
+    left: 0.625em;
+    font-size: 1.25em;
     font-weight: 800;
   }
 `;
@@ -113,7 +114,6 @@ const RightSection = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
-  height: 230px;
   span {
     position: absolute;
     color: white;

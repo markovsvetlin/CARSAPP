@@ -1,15 +1,19 @@
-import Appbar from "./Appbar"
+import Appbar from "./Appbar";
+import Head from "next/head";
 
-
-
-const Layout = ({children}) => {
-    return (
-        <div>
-            <Appbar />
-            {children}
-            <style jsx global>{`
-            
+const Layout = ({ children, images }) => {
+  console.log(images);
+  return (
+    <div>
+      <Head>
+        <title>My page title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+      <Appbar />
+      {children}
+      <style jsx global>{`
         body {
+          width: 100%;
           margin: 0;
           padding: 0;
           font-size: 18px;
@@ -25,8 +29,8 @@ const Layout = ({children}) => {
           margin-bottom: 10px;
         }
       `}</style>
-        </div>
-    )
-}
+    </div>
+  );
+};
 
-export default Layout
+export default Layout;

@@ -1,27 +1,26 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { useRouter } from "next/router";
 
+const Post = ({ image, text }) => {
+  console.log(image.id);
+  const router = useRouter();
 
-const Post = ({image, text}) => {
-    
-    return (
-       <PostContainer>
-        <img src={image.urls.small} />
-        <div className='LeftSide'>
-       <span>Rickie Baroch - June 6, 2019</span>
-       <span>Vehicle</span>
-       <p>Lbasdasdas das das da d asd asd asd </p>
-       <p>{text}</p>
-       </div>
-      
-       </PostContainer>
-            
-        
-    )
-}
+  return (
+    <PostContainer onClick={() => router.push(`${image.id}`)}>
+      <img src={image.urls.small} />
+      <div className="LeftSide">
+        <span>Rickie Baroch - June 6, 2019</span>
+        <span>Vehicle</span>
+        <p>Lbasdasdas das das da d asd asd asd </p>
+        <p>{text}</p>
+      </div>
+    </PostContainer>
+  );
+};
 
 const PostContainer = styled.div`
-position:relative
-`
+  position: relative;
+  cursor: pointer;
+`;
 
-
-export default Post
+export default Post;
