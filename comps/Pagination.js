@@ -15,7 +15,7 @@ const Pagination = () => {
     currentPage > 1 && setCurrentPage(currentPage - 1);
   };
 
-  console.log(currentPage);
+  // console.log(currentPage);
   return (
     <PaginationContainer>
       <ArrowButton

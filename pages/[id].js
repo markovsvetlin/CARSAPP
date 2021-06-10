@@ -17,13 +17,13 @@ const Detail = ({ images, imagesArr }) => {
           rsd qawd qw das dsa dsa dsa dsad sad asd asd asd asd sd sad asd saasd
           asd
         </p>
-        <img src={images.urls.regular} />
+        <img src={images?.urls.regular} />
       </PrimarySection>
       <SecondarySection isMobile={isMobile}>
         <Content isMobile={isMobile}>
           <User isMobile={isMobile}>
             <div className="user-container">
-              <img src={images.urls.regular} />
+              <img src={images?.urls.regular} />
               <div className="user-data">
                 <span>MIKA MATIKAINEN</span>
                 <span>Apr 15, 2020 - 4 min read</span>
@@ -55,8 +55,8 @@ const Detail = ({ images, imagesArr }) => {
             only five centuries, but also the leap into electronic typesetting,
           </p>
           <h4>Advertisment</h4>
-          <img className="small-ads" src={images.urls.regular} />
-          <img src={images.urls.regular} />
+          <img className="small-ads" src={images?.urls.regular} />
+          <img src={images?.urls.regular} />
           <p>sdds dsa das d asd asda sdsa da sd asd sad asd asd </p>
           <p>
             orem Ipsum is simply dummy text of the printing and typesetting
@@ -66,7 +66,7 @@ const Detail = ({ images, imagesArr }) => {
             only five centuries
           </p>
           <h4>Advertisment</h4>
-          <img className="small-ads" src={images.urls.regular} />
+          <img className="small-ads" src={images?.urls.regular} />
           <p>A list look like thhis</p>
           <ul>
             <li>First item in the list</li>
@@ -83,19 +83,19 @@ const Detail = ({ images, imagesArr }) => {
           </div>
         </Content>
         <Ads>
-          <img src={images.urls.regular} />
+          <img src={images?.urls.regular} />
         </Ads>
       </SecondarySection>
 
       <MostPopular isMobile={isMobile}>
         <h3>Most Popular</h3>
         <div className="popular-posts">
-          {imagesArr.results.slice(0, 4).map((image) => (
+          {imagesArr?.results?.slice(0, 4)?.map((image) => (
             <Post image={image} />
           ))}
         </div>
       </MostPopular>
-      <Footer images={imagesArr.results} />
+      <Footer images={imagesArr?.results} />
     </div>
   );
 };
@@ -107,7 +107,7 @@ export async function getStaticPaths() {
     `https://api.unsplash.com/search/photos?page=1&query=cars&client_id=KqKdgpKGcYsmlgKjlTsTednSV8cqHvQjyGsqo_-q-eA`
   );
   const images = await res.json();
-  const paths = images.results.map((result) => {
+  const paths = images?.results?.map((result) => {
     return {
       params: { id: result.id },
     };
@@ -115,7 +115,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 
@@ -130,6 +130,7 @@ export async function getStaticProps(context) {
     `https://api.unsplash.com/search/photos?page=1&query=cars&client_id=KqKdgpKGcYsmlgKjlTsTednSV8cqHvQjyGsqo_-q-eA`
   );
   const allImages = await resAllImages.json();
+  // console.error(allImages);
 
   return {
     props: {

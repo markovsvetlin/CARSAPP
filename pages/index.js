@@ -1,7 +1,7 @@
 import { useMediaQuery } from "react-responsive";
 import Carousel from "../comps/Carousel";
 import Footer from "../comps/Footer";
-import HomePage from "./Home";
+import HomePage from "../comps/Home/index";
 
 const Home = ({ images }) => {
   const imagesArr = images.results;
