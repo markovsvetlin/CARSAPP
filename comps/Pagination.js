@@ -67,6 +67,13 @@ export default Pagination;
 const PaginationContainer = styled.div`
   margin-left: 70px;
   margin-bottom: 50px;
+  display: flex;
+  padding-left: 130px;
+  @media (max-width: 600px) {
+    justify-content: center;
+    padding-left: 0px;
+    padding-right: 60px;
+  }
 `;
 
 const PageButton = styled.button`
@@ -75,12 +82,23 @@ const PageButton = styled.button`
   color: ${({ current, number }) => (current !== number ? "black" : "white")};
   padding: 10px 15px;
   margin: 5px;
+  @media (max-width: 400px) {
+    font-size: 12px;
+    padding: 10px 10px;
+  }
 `;
 const DotButton = styled.button`
   background-color: white;
   padding: 10px 15px;
+  @media (max-width: 400px) {
+    padding: 2px 8px;
+  }
 `;
 const ArrowButton = styled.button`
   background-color: white;
   padding: 10px 15px;
+  @media (max-width: 400px) {
+    padding: 0px 10px;
+    font-size: 10px;
+  }
 `;

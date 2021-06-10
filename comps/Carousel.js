@@ -57,12 +57,15 @@ const SliderWrapper = styled.div`
 
   .carousel__inner-slide {
     width: 100%;
+    position: relative;
     img {
       text-align: center;
-      position: relative;
-      height: 300px;
+       height: auto;
       width: 100%;
       object-fit: cover;
+    }
+    
+
     }
     span {
       position: absolute;
@@ -76,18 +79,20 @@ const SliderWrapper = styled.div`
 
       &:nth-child(1) {
         position: absolute;
-        top: 60%;
+        top: 70%;
         left: 1%;
         z-index: 1;
         font-size: 12px;
         background-color: transparent;
+       
       }
     }
     p {
       position: absolute;
-      top: 60%;
+      top: 70%;
       left: 5%;
       font-size: 1rem;
+      
     }
   }
   .carousel__dot {

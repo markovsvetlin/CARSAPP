@@ -48,48 +48,68 @@ export default Footer;
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: ${({ isMobile }) =>
-    !isMobile ? "1fr 1fr 1fr" : "1fr"};
+  grid-template-columns: 1fr 1fr 1fr;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
   column-gap: 2.5em;
   width: 100%;
-  height: 30em;
+  height: 28em;
   background-color: #0e1111;
 `;
 const Contact = styled.div`
-  margin-left: ${({ isMobile }) => (!isMobile ? "3em" : "1em")};
-  padding-left: ${({ isMobile }) => (!isMobile ? "3em" : "1em")};
+  margin-left: ${({ isMobile }) => (!isMobile ? "3em" : "0.5em")};
+  padding-left: ${({ isMobile }) => (!isMobile ? "3em" : "0.5em")};
   padding-top: 3em;
+
+  @media (max-width: 1024px) {
+    margin: 1em;
+    padding: 1em;
+  }
+
+  p {
+    padding-right: 10px;
+  }
+
   h2 {
-    margin-top: 5.5em;
+    margin-top: ${({ isMobile }) => (!isMobile ? "2em" : "2.5em")};
   }
 `;
 const Icons = styled.div`
   svg {
-    font-size: 20px;
+    font-size: 15px;
     background-color: #353839;
     margin-right: 10px;
-
-    padding: 10px 20px;
+    padding: 8px 15px;
+    @media (max-width: 600px) {
+      font-size: 12px;
+      padding: 8px 15px;
+      margin-right: 5px;
+    }
   }
 `;
 const RecentPosts = styled.div`
   margin-left: 1em;
-
+  display: flex;
+  flex-direction: column;
   h3 {
     margin-top: 70px;
   }
 
   div {
     display: flex;
-    margin: 50px 0px 50px 0px;
+
     width: 500px;
     span {
       display: none;
       &:nth-child(1) {
-        margin-left: 20px;
-        display: block;
+        display: inline;
         order: 2;
         font-size: 15px;
+        padding-left: 20px;
       }
     }
   }
@@ -100,7 +120,7 @@ const RecentPosts = styled.div`
       display: none;
     }
   }
-  .LeftSide {
+  .post-content {
     display: flex;
     flex-direction: column;
     margin: 0px;
@@ -120,7 +140,11 @@ const Rights = styled.div`
   width: 100%;
   height: 80px;
   margin: 0px;
+
   h3 {
     margin: 0px;
+    @media (max-width: 600px) {
+      font-size: 12px;
+    }
   }
 `;

@@ -55,10 +55,8 @@ export default SideBar;
 
 const Character = styled.div`
   position: relative;
-
   flex-direction: column;
   span {
-    color: red;
     &:nth-child(2) {
       display: none;
     }
@@ -74,16 +72,22 @@ const Character = styled.div`
     height: 70px;
     border-radius: 15px;
     cursor: pointer;
+    margin-top: 70px;
   }
-  .LeftSide {
+  .post-content {
     display: flex;
     flex-direction: column;
+    margin: 0px;
+    padding: 0px;
+    height: 150px;
+    box-shadow: none;
 
     span {
       order: 3;
       font-size: 12px;
       color: grey;
-      margin-left: 35px;
+      margin-left: 30px;
+      font-style: italic;
     }
     p {
       order: 3;
@@ -96,56 +100,47 @@ const Character = styled.div`
         font-size: 17px;
         font-weight: bold;
         color: black;
-        margin-left: 15px;
+
         margin-bottom: 10px;
       }
     }
   }
 `;
 const PopularPosts = styled.div`
-  margin-top: 50px;
-  .LeftSide {
+  div {
     display: flex;
     flex-direction: column;
   }
-
-  span {
-    position: absolute;
-    color: white;
-    top: 10px;
-    left: 20px;
-    font-size: 16px;
-    background-color: #4267b2;
-    padding: 1px 10px;
-    border-radius: 10px;
-    &:nth-child(1) {
-      position: static;
-      background-color: transparent;
-      order: 2;
-      color: black;
-      padding-bottom: 50px;
-      padding-left: 0px;
-      font-size: 12px;
-    }
-  }
-
-  p {
-    margin-top: 10px;
-    margin-bottom: 0px;
-    order: 1;
-    color: black;
-    &:nth-child(4) {
-      display: none;
-    }
+  img {
+    width: 100%;
+    max-height: 230px;
+    z-index: 2;
   }
   h3 {
     color: black;
   }
-  img {
-    width: 100%;
-    max-height: 250px;
-    object-fit: cover;
-    border-radius: 10px;
+
+  .post-content {
+    padding: 20px 20px 50px 20px;
+    background-color: transparent;
+    height: 5rem;
+    margin: 0px 0px 20px 0px;
+    @media (max-width: 1024) {
+      padding: 0px;
+      margin: 0px 20px;
+    }
+  }
+  span {
+    position: absolute;
+    top: 80px;
+    &:nth-child(2) {
+      display: block;
+      top: -210px;
+      z-index: 1;
+    }
+  }
+  p {
+    line-height: 25px;
   }
 `;
 const TagsContainer = styled.div`

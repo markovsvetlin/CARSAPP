@@ -22,10 +22,12 @@ const Detail = ({ images, imagesArr }) => {
       <SecondarySection isMobile={isMobile}>
         <Content isMobile={isMobile}>
           <User isMobile={isMobile}>
-            <img src={images.urls.regular} />
-            <div>
-              <span>MIKA MATIKAINEN</span>
-              <span>Apr 15, 2020 - 4 min read</span>
+            <div className="user-container">
+              <img src={images.urls.regular} />
+              <div className="user-data">
+                <span>MIKA MATIKAINEN</span>
+                <span>Apr 15, 2020 - 4 min read</span>
+              </div>
             </div>
             <div className="Icons">
               <FontAwesomeIcon icon={faFacebookF} />
@@ -53,7 +55,7 @@ const Detail = ({ images, imagesArr }) => {
             only five centuries, but also the leap into electronic typesetting,
           </p>
           <h4>Advertisment</h4>
-          <img src={images.urls.regular} />
+          <img className="small-ads" src={images.urls.regular} />
           <img src={images.urls.regular} />
           <p>sdds dsa das d asd asda sdsa da sd asd sad asd asd </p>
           <p>
@@ -63,8 +65,8 @@ const Detail = ({ images, imagesArr }) => {
             and scrambled it to make a type specimen book. It has survived not
             only five centuries
           </p>
-          <h3>Advertisment</h3>
-          <img src={images.urls.regular} />
+          <h4>Advertisment</h4>
+          <img className="small-ads" src={images.urls.regular} />
           <p>A list look like thhis</p>
           <ul>
             <li>First item in the list</li>
@@ -73,10 +75,10 @@ const Detail = ({ images, imagesArr }) => {
           </ul>
           <div className="share">
             <button>
-              <FontAwesomeIcon icon={faFacebookF} /> Shade on Facebook
+              <FontAwesomeIcon icon={faFacebookF} /> Share on Facebook
             </button>
             <button>
-              <FontAwesomeIcon icon={faTwitter} /> Shade on Twitter
+              <FontAwesomeIcon icon={faTwitter} /> Share on Twitter
             </button>
           </div>
         </Content>
@@ -87,7 +89,7 @@ const Detail = ({ images, imagesArr }) => {
 
       <MostPopular isMobile={isMobile}>
         <h3>Most Popular</h3>
-        <div>
+        <div className="popular-posts">
           {imagesArr.results.slice(0, 4).map((image) => (
             <Post image={image} />
           ))}
@@ -140,22 +142,29 @@ export async function getStaticProps(context) {
 //styles
 
 const PrimarySection = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 100px;
+  margin: 4em 0em;
+  @media (max-width: 768px) {
+    margin: 1em 0em;
+  }
 
   h2 {
-    margin: 120px 0px 30px 0px;
-    text-align: center;
     color: black;
+    text-align: center;
+    padding: 0em 1em;
   }
 
   p {
     color: black;
     text-align: center;
-    max-width: 700px;
-    margin-bottom: 70px;
+    width: 60%;
+    margin-bottom: 2em;
+    @media (max-width: 768px) {
+      width: 90%;
+    }
   }
   img {
     width: 100%;
@@ -164,38 +173,65 @@ const PrimarySection = styled.div`
   }
 `;
 
-const Content = styled.div`
-  color: black;
-  padding-right: 30px;
+const SecondarySection = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2em;
+  padding: 0em 17em;
+  @media (max-width: 1024px) {
+    padding: 0em 5em;
+  }
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    padding: 0em 1em;
+  }
+`;
 
+const Content = styled.div`
+  p {
+    color: black;
+  }
+  h4 {
+    color: black;
+    text-align: center;
+  }
+  h2 {
+    color: black;
+  }
+  span {
+    color: black;
+  }
+  svg {
+    color: black;
+  }
   img {
     width: 100%;
-    height: ${({ isMobile }) => (!isMobile ? "600px" : "300px")};
-    &:nth-child(6) {
-      height: 100px;
-      object-fit: cover;
-      margin-bottom: 30px;
-    }
-    &:nth-child(11) {
-      height: 100px;
-      object-fit: cover;
-      margin-bottom: 30px;
-    }
+    height: 300px;
+    object-fit: cover;
+  }
+  ul {
+    color: black;
+  }
+  .small-ads {
+    height: 5em;
   }
   .share {
-    margin: ${({ isMobile }) => (!isMobile ? "100px 0px" : "40px 0px")};
     display: flex;
     justify-content: center;
     button {
       background-color: transparent;
-      color: black;
-      border: 1px solid grey;
-      font-size: ${({ isMobile }) => (!isMobile ? "20px" : "12px")};
-      padding: ${({ isMobile }) => (!isMobile ? "20px 60px" : "10px 30px")};
-      cursor: pointer;
-      svg {
-        margin-right: 10px;
+      border: none;
+      padding: 0.5em 2em;
+      @media (max-width: 460px) {
+        font-size: 0.6em;
+        padding: 0.5em 1em;
       }
+
+      svg {
+        margin-right: 1em;
+      }
+      box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+        rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     }
   }
 `;
@@ -203,31 +239,36 @@ const Content = styled.div`
 const User = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 50px;
-  span {
-    font-size: ${({ isMobile }) => (!isMobile ? "15px" : "10px")};
-    &:nth-child(1) {
-      font-size: ${({ isMobile }) => (!isMobile ? "25px" : "15px")};
-    }
-  }
+  justify-content: space-between;
+
   img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+    height: 3em;
+    width: 3em;
+    border-radius: 3em;
   }
-  div {
+  .user-data {
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+    margin-left: 1em;
+    @media (max-width: 740px) {
+      font-size: 0.6em;
+    }
   }
   .Icons {
-    margin-left: ${({ isMobile }) => (!isMobile ? "550px" : "100px")};
-    display: flex;
-    flex-direction: row;
+    svg {
+      border: 1px solid black;
+      padding: 0.5em 1.3em;
+      @media (max-width: 740px) {
+        font-size: 0.6em;
+      }
+      @media (max-width: 280px) {
+        font-size: 0.4em;
+        padding: 0.5em 1em;
+      }
+    }
   }
-  svg {
-    border: 1px solid grey;
-    padding: ${({ isMobile }) => (!isMobile ? "10px 25px" : "5px 10px")};
+  .user-container {
+    display: flex;
   }
 `;
 const Ads = styled.div`
@@ -236,65 +277,80 @@ const Ads = styled.div`
   }
 
   img {
-    width: 90%;
-    height: 250px;
-    object-fit: cover;
-  }
-`;
-
-const SecondarySection = styled.div`
-  padding: ${({ isMobile }) => (!isMobile ? "0px 250px" : "0px 25px;")};
-  display: grid;
-  grid-template-columns: ${({ isMobile }) => (!isMobile ? "3fr 1fr" : "1fr")};
-`;
-
-const MostPopular = styled.div`
-  color: black;
-  padding: ${({ isMobile }) =>
-    !isMobile ? "0px 300px;" : "0px 70px 0px 20px;"};
-  margin-bottom: 100px;
-
-  img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    position: relative;
   }
-  div {
-    width: ${({ isMobile }) => (!isMobile ? "90%" : "100%")};
-    display: flex;
-    flex-direction: ${({ isMobile }) => (!isMobile ? "row" : "column")};
+`;
 
+const MostPopular = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3em 0em;
+
+  h3 {
+    color: black;
+  }
+  span {
+    color: black;
+    order: 2;
+    font-size: 0.8em;
+    font-style: italic;
+    @media (max-width: 768px) {
+      margin-left: 1em;
+    }
+    &:nth-child(2) {
+      top: 1em;
+      left: 1em;
+      color: white;
+      position: absolute;
+      background-color: #4267b2;
+      padding: 0.2em 0.5em;
+      border-radius: 0.5em;
+      font-size: 0.8em;
+    }
+  }
+  p {
+    color: black;
+    order: 1;
+    @media (max-width: 768px) {
+      margin-left: 1em;
+    }
+    &:nth-child(4) {
+      display: none;
+    }
+  }
+  .popular-posts {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    @media (max-width: 900px) {
+      flex-direction: column;
+    }
+
+    width: 100%;
     div {
-      margin: 10px;
       display: flex;
       flex-direction: column;
-
-      span {
-        position: absolute;
-        top: 10px;
-        color: white;
-        font-size: 13px;
-        background-color: #4267b2;
-        padding: 1px 10px;
-        border-radius: 10px;
-
-        &:nth-child(1) {
-          background-color: transparent;
-          padding: 0px;
-          order: 2;
-          top: 250px;
-          font-size: 12px;
-          color: grey;
-          font-style: italic;
-          margin-top: 8px;
-        }
+      margin-right: 2em;
+      width: 300px;
+      @media (max-width: 1024px) {
+        width: 10em;
       }
-
-      p {
-        order: 1;
-        margin: 0px;
-        line-height: 20px;
+      @media (max-width: 900px) {
+        width: 100%;
+        margin-bottom: 1.5em;
+      }
+    }
+    img {
+      width: 100%;
+      height: 11em;
+      object-fit: cover;
+      @media (max-width: 768px) {
+        height: 15em;
       }
     }
   }

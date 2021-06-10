@@ -59,15 +59,20 @@ const Container = styled.div`
 const Logo = styled.h3`
   width: 12%;
   padding: 0em 1.3em;
+  font-size: 1em;
+
   @media (max-width: 400) {
     padding: 0em;
+  }
+  span {
+    background-color: #4267b2;
+    padding: 0.3em;
   }
 `;
 const MenuContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  padding-right: 9.375em;
 
   a {
     margin: 0.625em;
