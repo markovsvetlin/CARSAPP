@@ -21,7 +21,7 @@ const Appbar = () => {
         <Link href="/Purchase">Purchase</Link>
       </MenuContainer>
 
-      <Search />
+      <Search className="search" />
     </Container>
   ) : (
     <Container>
@@ -41,26 +41,36 @@ export default Appbar;
 //styles
 
 const Container = styled.div`
+  * {
+    font-family: PT Sans;
+  }
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  font-size: 14px;
   align-items: center;
   background-color: black;
   height: 5.625em;
+  .search {
+    margin-right: 30px;
+    width: 16px;
+    color: #929eaf;
+  }
   @media (max-width: 1025) {
     width: 30%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     position: fixed;
     z-index: 3;
   }
+  @media (max-width: 768px) {
+    justify-content:space-between;
 `;
 const Logo = styled.h3`
   width: 12%;
   padding: 0em 1.3em;
   font-size: 1em;
-
+  text-align: center;
   @media (max-width: 400) {
     padding: 0em;
   }
@@ -71,13 +81,15 @@ const Logo = styled.h3`
 `;
 const MenuContainer = styled.div`
   display: flex;
-  width: 100%;
+
   justify-content: center;
 
   a {
     margin: 0.625em;
     text-decoration: none;
-    color: white;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: PT Sans;
   }
 `;
 const MenuButton = styled.div`

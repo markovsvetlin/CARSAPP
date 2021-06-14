@@ -5,28 +5,37 @@ import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import Footer from "../comps/Footer";
 import { useMediaQuery } from "react-responsive";
+import { useRouter } from "next/router";
 
 const Detail = ({ images, imagesArr }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <PrimarySection isMobile={isMobile}>
-        <h2>One of Saturn`s largest rings may be newer than anyone</h2>
-        <p>
+        <h2 className="detail-title">
+          One of Saturn`s largest rings may be newer than anyone
+        </h2>
+        <p className="detail-exerpt">
           dasdsd asd dsadsad sad sad asd sad asd asdasd asdasdqweqwe qwe qwe qwf
           rsd qawd qw das dsa dsa dsa dsad sad asd asd asd asd sd sad asd saasd
           asd
         </p>
-        <img src={images?.urls.regular} />
+        <img className="detail-image" src={images?.urls.regular} />
       </PrimarySection>
-      <SecondarySection isMobile={isMobile}>
-        <Content isMobile={isMobile}>
-          <User isMobile={isMobile}>
+      <SecondarySection>
+        <Content>
+          <User>
             <div className="user-container">
-              <img src={images?.urls.regular} />
+              <img className="user-avatar" src={images?.urls.regular} />
               <div className="user-data">
-                <span>MIKA MATIKAINEN</span>
-                <span>Apr 15, 2020 - 4 min read</span>
+                <span className="user-name">MIKA MATIKAINEN</span>
+                <span className="date">Apr 15, 2020 - 4 min read</span>
               </div>
             </div>
             <div className="Icons">
@@ -34,7 +43,7 @@ const Detail = ({ images, imagesArr }) => {
               <FontAwesomeIcon icon={faTwitter} />
             </div>
           </User>
-          <p>
+          <p className="detail-text">
             orem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -46,7 +55,7 @@ const Detail = ({ images, imagesArr }) => {
             PageMaker including versions of Lorem Ipsum.
           </p>
           <h2>Next on the pipeline</h2>
-          <p>
+          <p className="detail-text">
             {" "}
             orem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
@@ -54,41 +63,44 @@ const Detail = ({ images, imagesArr }) => {
             and scrambled it to make a type specimen book. It has survived not
             only five centuries, but also the leap into electronic typesetting,
           </p>
-          <h4>Advertisment</h4>
+          <h4 className="ad-text">Advertisment</h4>
           <img className="small-ads" src={images?.urls.regular} />
-          <img src={images?.urls.regular} />
-          <p>sdds dsa das d asd asda sdsa da sd asd sad asd asd </p>
-          <p>
+          <img className="big-ads" src={images?.urls.regular} />
+          <p className="ad-text">
+            sdds dsa das d asd asda sdsa da sd asd sad asd asd{" "}
+          </p>
+          <p className="detail-text">
             orem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book. It has survived not
             only five centuries
           </p>
-          <h4>Advertisment</h4>
+          <h4 className="ad-text">Advertisment</h4>
           <img className="small-ads" src={images?.urls.regular} />
-          <p>A list look like thhis</p>
-          <ul>
+          <p className="detail-text">A list look like this</p>
+          <ul className="list">
             <li>First item in the list</li>
             <li>Second item in the list</li>
             <li>Third item in the list</li>
           </ul>
           <div className="share">
-            <button>
+            <button className="share-buttons">
               <FontAwesomeIcon icon={faFacebookF} /> Share on Facebook
             </button>
-            <button>
+            <button className="share-buttons">
               <FontAwesomeIcon icon={faTwitter} /> Share on Twitter
             </button>
           </div>
         </Content>
         <Ads>
+          <h4 className="ad-text">Advertisment</h4>
           <img src={images?.urls.regular} />
         </Ads>
       </SecondarySection>
 
-      <MostPopular isMobile={isMobile}>
-        <h3>Most Popular</h3>
+      <MostPopular>
+        <h3 className="popular-title">Most Popular</h3>
         <div className="popular-posts">
           {imagesArr?.results?.slice(0, 4)?.map((image) => (
             <Post image={image} />
@@ -104,7 +116,7 @@ export default Detail;
 
 export async function getStaticPaths() {
   const res = await fetch(
-    `https://api.unsplash.com/search/photos?page=1&query=cars&client_id=KqKdgpKGcYsmlgKjlTsTednSV8cqHvQjyGsqo_-q-eA`
+    `https://api.unsplash.com/search/photos?&query=cars&client_id=KqKdgpKGcYsmlgKjlTsTednSV8cqHvQjyGsqo_-q-eA`
   );
   const images = await res.json();
   const paths = images?.results?.map((result) => {
@@ -127,15 +139,20 @@ export async function getStaticProps(context) {
   const images = await res.json();
 
   const resAllImages = await fetch(
-    `https://api.unsplash.com/search/photos?page=1&query=cars&client_id=KqKdgpKGcYsmlgKjlTsTednSV8cqHvQjyGsqo_-q-eA`
+    `https://api.unsplash.com/search/photos?&query=cars&client_id=KqKdgpKGcYsmlgKjlTsTednSV8cqHvQjyGsqo_-q-eA`
   );
   const allImages = await resAllImages.json();
-  // console.error(allImages);
+
+  if (!images) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
-      imagesArr: allImages,
-      images: images,
+      imagesArr: allImages && allImages,
+      images: images && images,
     },
   };
 }
@@ -143,6 +160,9 @@ export async function getStaticProps(context) {
 //styles
 
 const PrimarySection = styled.div`
+  * {
+    font-family: PT Sans;
+  }
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -152,22 +172,31 @@ const PrimarySection = styled.div`
     margin: 1em 0em;
   }
 
-  h2 {
+  .detail-title {
+    max-width: 858px;
     color: black;
     text-align: center;
     padding: 0em 1em;
+    font-weight: bold;
+    font-size: 54px;
+    line-height: 100%;
   }
 
-  p {
+  .detail-exerpt {
     color: black;
+    font-family: PT Mono;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 170%;
     text-align: center;
-    width: 60%;
+    max-width: 994px;
     margin-bottom: 2em;
     @media (max-width: 768px) {
       width: 90%;
     }
   }
-  img {
+  .detail-image {
     width: 100%;
     height: ${({ isMobile }) => (!isMobile ? "1200px" : "400px")};
     object-fit: cover;
@@ -176,9 +205,9 @@ const PrimarySection = styled.div`
 
 const SecondarySection = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 3fr 1fr;
   gap: 2em;
-  padding: 0em 17em;
+  padding: 0em 10em;
   @media (max-width: 1024px) {
     padding: 0em 5em;
   }
@@ -186,32 +215,68 @@ const SecondarySection = styled.div`
     grid-template-columns: 1fr;
     padding: 0em 1em;
   }
+  @media (min-width: 1921px) {
+    padding: 0em 40em;
+  }
 `;
 
 const Content = styled.div`
-  p {
-    color: black;
+  padding-right: 2em;
+  @media (max-width: 768px) {
+    padding: 0em 1em;
+  }
+  .detail-text {
+    font-family: PT Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 170%;
+
+    color: #000000;
   }
   h4 {
     color: black;
     text-align: center;
   }
   h2 {
-    color: black;
+    font-family: PT Serif Caption;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 160%;
+    color: #000000;
   }
-  span {
-    color: black;
+  .ad-text {
+    font-family: PT Serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 140%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #373737;
   }
   svg {
     color: black;
   }
-  img {
+  .small-ads {
     width: 100%;
     height: 300px;
     object-fit: cover;
+    margin-bottom: 2em;
   }
-  ul {
-    color: black;
+  .list {
+    font-family: PT Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 170%;
+    color: #000000;
+  }
+  .big-ads {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
   }
   .small-ads {
     height: 5em;
@@ -219,45 +284,73 @@ const Content = styled.div`
   .share {
     display: flex;
     justify-content: center;
-    button {
+    .share-buttons {
       background-color: transparent;
       border: none;
+      font-family: PT Serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 160%;
+      box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+      color: #000000;
       padding: 0.5em 2em;
       @media (max-width: 460px) {
         font-size: 0.6em;
         padding: 0.5em 1em;
       }
-
       svg {
         margin-right: 1em;
       }
-      box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-        rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     }
   }
 `;
 
 const User = styled.div`
+  * {
+    font-family: PT Sans;
+  }
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  img {
-    height: 3em;
-    width: 3em;
+  .user-avatar {
+    height: 64.64px;
+    width: 64.64px;
     border-radius: 3em;
   }
   .user-data {
     display: flex;
     flex-direction: column;
     margin-left: 1em;
+    justify-content: center;
     @media (max-width: 740px) {
       font-size: 0.6em;
     }
   }
+  .user-name {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0.05em;
+  }
+  .date {
+    font-family: PT Serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+
+    color: #000000;
+  }
   .Icons {
     svg {
-      border: 1px solid black;
+      background: #ffffff;
+      border: 1px solid #eaeaea;
+      box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
       padding: 0.5em 1.3em;
       @media (max-width: 740px) {
         font-size: 0.6em;
@@ -273,55 +366,68 @@ const User = styled.div`
   }
 `;
 const Ads = styled.div`
-  h3 {
-    color: black;
+  .ad-text {
+    font-family: PT Serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 140%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #373737;
   }
 
   img {
     width: 100%;
-    height: 200px;
+    height: 400px;
     object-fit: cover;
   }
 `;
 
 const MostPopular = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 3em 0em;
+  align-items: flex-start;
+  margin: 3em 2em;
 
-  h3 {
-    color: black;
+  .popular-title {
+    text-align;
+    font-family: PT Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 39px;
+    color: #171717;
   }
-  span {
-    color: black;
-    order: 2;
-    font-size: 0.8em;
+
+  .category {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #4A90E2;
+    padding: 0.2em 0.5em;
+    border-radius: 0.5em;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .author {
+    font-family: PT Sans;
     font-style: italic;
-    @media (max-width: 768px) {
-      margin-left: 1em;
-    }
-    &:nth-child(2) {
-      top: 1em;
-      left: 1em;
-      color: white;
-      position: absolute;
-      background-color: #4267b2;
-      padding: 0.2em 0.5em;
-      border-radius: 0.5em;
-      font-size: 0.8em;
-    }
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    order: 2;
+    color: #666666;
   }
-  p {
-    color: black;
+  .title {
+    font-family: PT Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 28px;
+    color: #171717;
     order: 1;
-    @media (max-width: 768px) {
-      margin-left: 1em;
-    }
-    &:nth-child(4) {
-      display: none;
-    }
+    margin: 0px 0px 10px 0px;
   }
   .popular-posts {
     position: relative;
@@ -331,9 +437,12 @@ const MostPopular = styled.div`
     @media (max-width: 900px) {
       flex-direction: column;
     }
+    .post-content {
+      display: flex;
+      flex-direction: column;
+    }
 
-    width: 100%;
-    div {
+    .post-container {
       display: flex;
       flex-direction: column;
       margin-right: 2em;

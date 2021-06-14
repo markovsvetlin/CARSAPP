@@ -20,10 +20,10 @@ const tags = [
 const SideBar = ({ images, text }) => {
   const router = useRouter();
   return (
-    <div style={{ marginLeft: 28, display: "flex", flexDirection: "column" }}>
+    <Container>
       <Character>
-        {images.slice(0, 1).map((image) => (
-          <div>
+        {images.slice(0, 1).map((image, index) => (
+          <div key={index}>
             <Post image={image} text={text} />
             <button onClick={() => router.push(`${image.id}`)}>
               Continue reading
@@ -32,118 +32,126 @@ const SideBar = ({ images, text }) => {
         ))}
       </Character>
       <PopularPosts>
-        <h3>Popular posts</h3>
-        {images.slice(1, 7).map((image) => (
-          <Post image={image} />
+        <h3 className="popular-post-title">Popular posts</h3>
+        {images.slice(1, 7).map((image, index) => (
+          <Post key={index} image={image} />
         ))}
       </PopularPosts>
       <TagsContainer>
         <h3>Tags</h3>
         <Tags>
-          {tags.map((tag) => (
-            <div>
-              <span>{tag}</span>
-            </div>
+          {tags.map((tag, index) => (
+            <span key={index}>{tag}</span>
           ))}
         </Tags>
       </TagsContainer>
-    </div>
+    </Container>
   );
 };
 
 export default SideBar;
 
+const Container = styled.div`
+  margin-left: 4em;
+  margin-right: 1em;
+  display: flex;
+  flex-direction: column;
+  * {
+    font-family: PT Sans;
+  }
+`;
+
 const Character = styled.div`
   position: relative;
+  display: flex;
   flex-direction: column;
-  span {
-    &:nth-child(2) {
+  div {
+    .post-content {
+      display: flex;
+      flex-direction: column;
+      margin: 0px;
+      padding: 0px;
+      box-shadow: none;
+    }
+    .category {
       display: none;
     }
-  }
-  img {
-    width: 100%;
-  }
+    post-image {
+      width: 100%;
+    }
 
-  button {
-    width: 100%;
-    color: white;
-    background-color: black;
-    height: 70px;
-    border-radius: 15px;
-    cursor: pointer;
-    margin-top: 70px;
-  }
-  .post-content {
-    display: flex;
-    flex-direction: column;
-    margin: 0px;
-    padding: 0px;
-    height: 150px;
-    box-shadow: none;
+    button {
+      width: 100%;
+      color: white;
+      background-color: #232323;
+      padding: 1em 0em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 14px;
+    }
 
-    span {
+    .author {
       order: 3;
       font-size: 12px;
       color: grey;
-      margin-left: 30px;
+
       font-style: italic;
     }
-    p {
-      order: 3;
-      line-height: 20px;
-      color: grey;
-      margin-bottom: 20px;
-
-      &:nth-child(3) {
-        order: 1;
-        font-size: 17px;
-        font-weight: bold;
-        color: black;
-
-        margin-bottom: 10px;
-      }
+    .title {
+      font-size: 18px;
+      line-height: 23px;
+      color: #171717;
+    }
+    .text {
+      font-size: 15px;
+      line-height: 25px;
     }
   }
 `;
 const PopularPosts = styled.div`
-  div {
+  .post-container {
     display: flex;
     flex-direction: column;
-  }
-  img {
-    width: 100%;
-    max-height: 230px;
-    z-index: 2;
-  }
-  h3 {
-    color: black;
+    margin-bottom: 30px;
+    .post-content {
+      margin: 0px;
+      padding: 0px;
+      z-index: 5;
+      box-shadow: none;
+    }
   }
 
-  .post-content {
-    padding: 20px 20px 50px 20px;
-    background-color: transparent;
-    height: 5rem;
-    margin: 0px 0px 20px 0px;
-    @media (max-width: 1024) {
-      padding: 0px;
-      margin: 0px 20px;
-    }
-  }
-  span {
-    position: absolute;
-    top: 80px;
-    &:nth-child(2) {
-      display: block;
-      top: -210px;
-      z-index: 1;
-    }
-  }
-  p {
+  .title {
+    font-size: 20px;
     line-height: 25px;
+    margin-left: 10px;
+  }
+  .post-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 5px;
+  }
+
+  .author {
+    font-style: italic;
+    margin-left: 10px;
+  }
+  .category {
+    margin: -180px 0px 180px 10px;
+    z-index: 2;
+  }
+
+  .popular-post-title {
+    color: #171717;
+    font-size: 18px;
+    margin: 1em 0em 0.2em 0em;
+    font-weight: 700;
   }
 `;
 const TagsContainer = styled.div`
+  max-width: 300px;
+  height: 300px;
   h3 {
     color: black;
   }
@@ -151,13 +159,17 @@ const TagsContainer = styled.div`
 const Tags = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  height: 200px;
 
+  border-radius: 3px;
   color: black;
   span {
-    background-color: lightgrey;
-    padding: 10px;
-
+    margin-right: 10px;
+    background-color: #ebebeb;
+    padding: 5px 5px;
+    font-size: 14px;
+    font-weight: 400;
     margin-bottom: 30px;
+    color: #171717;
+    margin: 5px;
   }
 `;

@@ -5,8 +5,8 @@ import Post from "../comps/Post";
 import { useMediaQuery } from "react-responsive";
 
 const Carousel = ({ images }) => {
-  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
-  console.log;
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  // console.log;
 
   return isMobile ? (
     <SliderWrapper>
@@ -17,8 +17,8 @@ const Carousel = ({ images }) => {
         visibleSlides={1}
       >
         <Slider>
-          {images.slice(1, 6).map((image) => (
-            <Slide>
+          {images?.slice(1, 6)?.map((image, index) => (
+            <Slide key={index}>
               <Post image={image} />
             </Slide>
           ))}
@@ -38,8 +38,8 @@ const Carousel = ({ images }) => {
         interval={6000}
       >
         <Slider>
-          {images.map((image) => (
-            <Slide>
+          {images?.map((image, index) => (
+            <Slide key={index}>
               <Post image={image} />
             </Slide>
           ))}
@@ -53,21 +53,17 @@ export default Carousel;
 const SliderWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: auto;
-
+ 
   .carousel__inner-slide {
     width: 100%;
     position: relative;
-    img {
-      text-align: center;
-       height: auto;
+    .post-image {
       width: 100%;
       object-fit: cover;
     }
-    
-
+   
     }
-    span {
+    .category {
       position: absolute;
       color: white;
       top: 5%;
@@ -77,26 +73,52 @@ const SliderWrapper = styled.div`
       margin-left: 10px;
       border-radius: 10px;
 
-      &:nth-child(1) {
+      }
+      .author {
         position: absolute;
-        top: 70%;
-        left: 1%;
+        top: 56%;
+        left: 5%;
         z-index: 1;
-        font-size: 12px;
+        font-size: 14px;
         background-color: transparent;
+        @media(max-width:600px){
+          font-size: 12px;
+          top: 66%;
+          left:4.5%;
+        }
+        @media(max-width:768px){
+          font-size: 20px;
+          top: 76%;
+          left:2.5%;
+        }
+        @media(max-width:568px){
+          font-size: 14px;
+          top: 67%;
+          left:5%;
+        }
        
       }
-    }
-    p {
+    .title {
+      padding: 0px 17px;
       position: absolute;
-      top: 70%;
-      left: 5%;
-      font-size: 1rem;
+      top: 56%;
+      line-height: 30px;
+      font-size: 20px;
+     
+       @media(max-width:768px){
+        font-size: 24px;
+        top: 76%;
+      }
+      @media(max-width:568px){
+        font-size: 16px;
+        top: 67%;
+        left:0px;
+      }
       
     }
   }
   .carousel__dot {
-    height: 11px;
+    height: 10px;
     width: 1px;
     margin: 3px;
     border-radius: 50%;
@@ -104,8 +126,16 @@ const SliderWrapper = styled.div`
   }
   .carousel__dot-group {
     position: absolute;
-    top: 85%;
+    top: 82%;
     left: 35%;
+    @media(max-width:768px){
+      top: 86%;
+    left: 40%;
+    }
+    @media(max-width:568px){
+      top: 83%;
+    left: 35%;
+    }
   }
 `;
 
@@ -113,7 +143,6 @@ const SliderWrapperDesktop = styled.div`
   h2 {
     color: black;
   }
-
   margin: 30px 200px;
   img {
     height: 300px;

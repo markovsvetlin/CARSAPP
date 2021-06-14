@@ -5,13 +5,16 @@ const Post = ({ image, text }) => {
   const router = useRouter();
 
   return (
-    <PostContainer onClick={() => router.push(`${image.id}`)}>
-      <img src={image.urls.small} />
+    <PostContainer
+      className="post-container"
+      onClick={() => router.push(`${image.id}`)}
+    >
+      <img className="post-image" src={image.urls.small} />
       <div className="post-content">
-        <span>Rickie Baroch - June 6, 2019</span>
-        <span>Vehicle</span>
-        <p>Lbasdasdas das das da d asd asd asd </p>
-        <p>{text}</p>
+        <span className="author">Rickie Baroch - June 6, 2019</span>
+        <span className="category">Vehicle</span>
+        <p className="title">Lbasdasdas das das da d asd asd asd </p>
+        <p className="text">{text}</p>
       </div>
     </PostContainer>
   );

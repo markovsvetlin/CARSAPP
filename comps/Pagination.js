@@ -26,10 +26,11 @@ const Pagination = () => {
       </ArrowButton>
 
       {pageNumbers
-        .slice(currentPage < 5 ? currentPage - 1 : 3, currentPage + 2)
-        .map((number, index) =>
+        ?.slice(currentPage < 5 ? currentPage - 1 : 3, currentPage + 2)
+        ?.map((number, index) =>
           number < 8 ? (
             <PageButton
+              key={index}
               onClick={() => setCurrentPage(number)}
               number={number}
               current={currentPage}
@@ -42,8 +43,9 @@ const Pagination = () => {
         )}
       {currentPage < 5 ? <DotButton disabled>....</DotButton> : ""}
 
-      {pageNumbers.slice(7, 8).map((number, index) => (
+      {pageNumbers?.slice(7, 8)?.map((number, index) => (
         <PageButton
+          key={index}
           onClick={() => setCurrentPage(number)}
           number={number}
           current={currentPage}
@@ -65,14 +67,15 @@ const Pagination = () => {
 export default Pagination;
 
 const PaginationContainer = styled.div`
-  margin-left: 70px;
-  margin-bottom: 50px;
+  * {
+    font-family: PT Sans;
+  }
+  margin: 70px 0px 50px 0px;
   display: flex;
-  padding-left: 130px;
+  padding-left: 120px;
   @media (max-width: 600px) {
     justify-content: center;
     padding-left: 0px;
-    padding-right: 60px;
   }
 `;
 
@@ -82,6 +85,10 @@ const PageButton = styled.button`
   color: ${({ current, number }) => (current !== number ? "black" : "white")};
   padding: 10px 15px;
   margin: 5px;
+  font-size: 16px;
+  line-height: 16px;
+  border-radius: 3px;
+  border: 1px solid #e5e5e5;
   @media (max-width: 400px) {
     font-size: 12px;
     padding: 10px 10px;
@@ -89,14 +96,23 @@ const PageButton = styled.button`
 `;
 const DotButton = styled.button`
   background-color: white;
-  padding: 10px 15px;
-  @media (max-width: 400px) {
+  padding: 5px 15px;
+  font-size: 16px;
+  margin: 5px;
+  border: 1px solid #e5e5e5;
+  @media (max-width: 768px) {
     padding: 2px 8px;
   }
 `;
 const ArrowButton = styled.button`
   background-color: white;
-  padding: 10px 15px;
+  margin: 5px 8px;
+  padding: 1px 15px;
+
+  mix-blend-mode: normal;
+  opacity: 0.4;
+  border: 1px solid #e5e5e5;
+  font-size: 8px;
   @media (max-width: 400px) {
     padding: 0px 10px;
     font-size: 10px;

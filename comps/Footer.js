@@ -31,8 +31,8 @@ const Footer = ({ images }) => {
         {!isMobile && (
           <RecentPosts>
             <h3>Recent Posts</h3>
-            {images?.slice(0, 2).map((image) => (
-              <Post image={image} />
+            {images?.slice(0, 2)?.map((image, index) => (
+              <Post key={index} image={image} />
             ))}
           </RecentPosts>
         )}
