@@ -1,161 +1,146 @@
-import { CarouselProvider, Slider, Slide, DotGroup } from "pure-react-carousel";
-import "pure-react-carousel/dist/react-carousel.es.css";
 import styled from "styled-components";
 import Post from "../comps/Post";
-import { useMediaQuery } from "react-responsive";
+import { useState } from "react";
+import useWindowDimensions from "./useWindowDemensions";
 
 const Carousel = ({ images }) => {
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-  // console.log;
+  const [currentSlide, setCurrentSlide] = useState(1);
+  const [initialX, setInitialX] = useState(null);
+  const { width } = useWindowDimensions();
 
-  return isMobile ? (
-    <SliderWrapper>
-      <CarouselProvider
-        naturalSlideWidth={900}
-        naturalSlideHeight={600}
-        totalSlides={5}
-        visibleSlides={1}
-      >
-        <Slider>
-          {images?.slice(1, 6)?.map((image, index) => (
-            <Slide key={index}>
-              <Post image={image} />
-            </Slide>
-          ))}
-        </Slider>
-        <DotGroup />
-      </CarouselProvider>
-    </SliderWrapper>
+  function startTouch(e) {
+    setInitialX(e.touches[0].clientX);
+  }
+  function changeSlide(e) {
+    if (initialX === 0) return;
+    if (initialX - e.changedTouches[0].clientX > 0) {
+      setCurrentSlide((currentSlide) => currentSlide + 1);
+    } else if (initialX - e.changedTouches[0].clientX < 0 && currentSlide > 1) {
+      setCurrentSlide((currentSlide) => currentSlide - 1);
+    }
+  }
+
+  return width < 813 ? (
+    <Container
+      onTouchStart={(e) => {
+        startTouch(e);
+      }}
+      onTouchEnd={(e) => {
+        changeSlide(e);
+      }}
+    >
+      {images.map((image, index, array) => {
+        if (index + 1 === currentSlide) {
+          return <Post type={"carousel"} image={image} />;
+        }
+        if (array.length < currentSlide) setCurrentSlide(1);
+      })}
+      <div className="dots">
+        {images.map((image, index, array) => (
+          <span
+            className={index + 1 === currentSlide ? "activeDot dot" : "dot"}
+            onClick={() => setCurrentSlide(index)}
+          ></span>
+        ))}
+      </div>
+    </Container>
   ) : (
-    <SliderWrapperDesktop>
+    <DesktopContainer>
       <h2>Partners</h2>
-      <CarouselProvider
-        naturalSlideWidth={900}
-        naturalSlideHeight={800}
-        totalSlides={10}
-        visibleSlides={4}
-        isPlaying={true}
-        interval={6000}
-      >
-        <Slider>
-          {images?.map((image, index) => (
-            <Slide key={index}>
-              <Post image={image} />
-            </Slide>
+      <div className="slider">
+        <div className="slide-track">
+          {images.slice(0, 5).map((image) => (
+            <div className="slide">
+              <img src={image.urls.small} />
+            </div>
           ))}
-        </Slider>
-      </CarouselProvider>
-    </SliderWrapperDesktop>
+          {images.slice(0, 5).map((image) => (
+            <div className="slide">
+              <img src={image.urls.small} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </DesktopContainer>
   );
 };
 
 export default Carousel;
-const SliderWrapper = styled.div`
-  position: relative;
-  width: 100%;
- 
-  .carousel__inner-slide {
-    width: 100%;
-    position: relative;
-    .post-image {
-      width: 100%;
-      object-fit: cover;
-    }
-   
-    }
-    .category {
-      position: absolute;
-      color: white;
-      top: 5%;
-      font-size: 10px;
-      background-color: #4267b2;
-      padding: 1px 10px;
-      margin-left: 10px;
-      border-radius: 10px;
 
-      }
-      .author {
-        position: absolute;
-        top: 56%;
-        left: 5%;
-        z-index: 1;
-        font-size: 14px;
-        background-color: transparent;
-        @media(max-width:600px){
-          font-size: 12px;
-          top: 66%;
-          left:4.5%;
-        }
-        @media(max-width:768px){
-          font-size: 20px;
-          top: 76%;
-          left:2.5%;
-        }
-        @media(max-width:568px){
-          font-size: 14px;
-          top: 67%;
-          left:5%;
-        }
-       
-      }
-    .title {
-      padding: 0px 17px;
-      position: absolute;
-      top: 56%;
-      line-height: 30px;
-      font-size: 20px;
-     
-       @media(max-width:768px){
-        font-size: 24px;
-        top: 76%;
-      }
-      @media(max-width:568px){
-        font-size: 16px;
-        top: 67%;
-        left:0px;
-      }
-      
-    }
+const Container = styled.div`
+  width: 100%;
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
   }
-  .carousel__dot {
+  .dot {
+    width: 10px;
     height: 10px;
-    width: 1px;
-    margin: 3px;
-    border-radius: 50%;
-    border: 1px solid black;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    z-index: 3;
   }
-  .carousel__dot-group {
-    position: absolute;
-    top: 82%;
-    left: 35%;
-    @media(max-width:768px){
-      top: 86%;
-    left: 40%;
-    }
-    @media(max-width:568px){
-      top: 83%;
-    left: 35%;
-    }
+  .activeDot {
+    background: black;
   }
 `;
 
-const SliderWrapperDesktop = styled.div`
+const DesktopContainer = styled.div`
   h2 {
-    color: black;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 39px;
+    color: #171717;
+    margin-bottom: 30px;
   }
-  margin: 30px 200px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 220px;
+  margin-bottom: 100px;
+  .slider {
+    height: 250px;
+    position: relative;
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+    background: linear-gradient(
+      90deg,
+      rgba(253, 0, 0, 0.99) -0.17%,
+      rgba(255, 255, 255, 0.99) -0.16%,
+      rgba(229, 229, 229, 0) 22.78%,
+      rgba(255, 255, 255, 0) 77.04%,
+      rgba(255, 255, 255, 0.99) 100%
+    );
+    mix-blend-mode: normal;
+    box-shadow: inset 0px 0px 60px -28px #000000;
+  }
+  .slide-track {
+    display: flex;
+    animation: scroll 30s linear infinite;
+  }
+  .slide {
+    height: 250px;
+    width: 350px;
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+  }
   img {
-    height: 300px;
     width: 100%;
+    height: 250px;
     object-fit: cover;
   }
-  p {
-    display: none;
-  }
-  span {
-    display: none;
-  }
-  .carousel__inner-slide {
-    width: 80%;
+
+  @keyframes scroll {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(-50%, 0);
+    }
   }
 `;

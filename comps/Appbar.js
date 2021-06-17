@@ -2,13 +2,13 @@ import Link from "next/link";
 import styled from "styled-components";
 import Search from "./Search";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import RightNav from "./RightNav";
+import useWindowDimensions from "./useWindowDemensions";
 const Appbar = () => {
   const [open, setOpen] = useState(false);
-  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
+  const { width } = useWindowDimensions();
 
-  return !isMobile ? (
+  return width > 812 ? (
     <Container>
       <Logo>
         Premium <span>CAR</span>

@@ -24,7 +24,7 @@ const SideBar = ({ images, text }) => {
       <Character>
         {images.slice(0, 1).map((image, index) => (
           <div key={index}>
-            <Post image={image} text={text} />
+            <Post type={"character"} image={image} text={text} />
             <button onClick={() => router.push(`${image.id}`)}>
               Continue reading
             </button>{" "}
@@ -34,7 +34,7 @@ const SideBar = ({ images, text }) => {
       <PopularPosts>
         <h3 className="popular-post-title">Popular posts</h3>
         {images.slice(1, 7).map((image, index) => (
-          <Post key={index} image={image} />
+          <Post type={"popular-posts"} key={index} image={image} />
         ))}
       </PopularPosts>
       <TagsContainer>
@@ -52,124 +52,53 @@ const SideBar = ({ images, text }) => {
 export default SideBar;
 
 const Container = styled.div`
-  margin-left: 4em;
-  margin-right: 1em;
   display: flex;
   flex-direction: column;
-  * {
-    font-family: PT Sans;
-  }
 `;
-
 const Character = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
   div {
-    .post-content {
-      display: flex;
-      flex-direction: column;
-      margin: 0px;
-      padding: 0px;
-      box-shadow: none;
-    }
-    .category {
-      display: none;
-    }
-    post-image {
-      width: 100%;
-    }
-
-    button {
-      width: 100%;
-      color: white;
-      background-color: #232323;
-      padding: 1em 0em;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 20px;
-      font-size: 14px;
-    }
-
-    .author {
-      order: 3;
-      font-size: 12px;
-      color: grey;
-
-      font-style: italic;
-    }
-    .title {
-      font-size: 18px;
-      line-height: 23px;
-      color: #171717;
-    }
-    .text {
-      font-size: 15px;
-      line-height: 25px;
-    }
+    display: flex;
+    flex-direction: column;
+  }
+  button {
+    background: #232323;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    color: #ffffff;
+    padding: 1em;
   }
 `;
 const PopularPosts = styled.div`
-  .post-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
-    .post-content {
-      margin: 0px;
-      padding: 0px;
-      z-index: 5;
-      box-shadow: none;
-    }
-  }
-
-  .title {
-    font-size: 20px;
-    line-height: 25px;
-    margin-left: 10px;
-  }
-  .post-image {
-    width: 100%;
-    height: 200px;
-    border-radius: 5px;
-  }
-
-  .author {
-    font-style: italic;
-    margin-left: 10px;
-  }
-  .category {
-    margin: -180px 0px 180px 10px;
-    z-index: 2;
-  }
-
   .popular-post-title {
-    color: #171717;
+    font-weight: bold;
     font-size: 18px;
-    margin: 1em 0em 0.2em 0em;
-    font-weight: 700;
+    line-height: 23px;
+    text-align: left;
+    font-family: PT Sans;
+    color: #171717;
+    margin: 2em 0em 0em 0em;
   }
 `;
 const TagsContainer = styled.div`
-  max-width: 300px;
-  height: 300px;
   h3 {
     color: black;
   }
 `;
 const Tags = styled.div`
+  font-family: PT Sans;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-
-  border-radius: 3px;
-  color: black;
   span {
-    margin-right: 10px;
-    background-color: #ebebeb;
-    padding: 5px 5px;
     font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 30px;
+    line-height: 18px;
     color: #171717;
-    margin: 5px;
+    background: #ebebeb;
+    border-radius: 3px;
+    margin: 0.3em;
+    text-align: center;
+    padding: 10px 0px;
+    cursor: pointer;
   }
 `;

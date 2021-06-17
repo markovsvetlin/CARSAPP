@@ -1,14 +1,11 @@
 import Post from "../comps/Post";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
-import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import Footer from "../comps/Footer";
-import { useMediaQuery } from "react-responsive";
+import useWindowDemensions from "../comps/useWindowDemensions";
 import { useRouter } from "next/router";
 
 const Detail = ({ images, imagesArr }) => {
-  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
+  const width = useWindowDemensions();
   const router = useRouter();
 
   if (router.isFallback) {
@@ -17,7 +14,7 @@ const Detail = ({ images, imagesArr }) => {
 
   return (
     <div>
-      <PrimarySection isMobile={isMobile}>
+      <PrimarySection width={width}>
         <h2 className="detail-title">
           One of Saturn`s largest rings may be newer than anyone
         </h2>
@@ -39,8 +36,25 @@ const Detail = ({ images, imagesArr }) => {
               </div>
             </div>
             <div className="Icons">
-              <FontAwesomeIcon icon={faFacebookF} />
-              <FontAwesomeIcon icon={faTwitter} />
+              <svg
+                fill="#000000"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24px"
+                height="24px"
+              >
+                {" "}
+                <path d="M12,0C5.373,0,0,5.373,0,12c0,6.016,4.432,10.984,10.206,11.852V15.18H7.237v-3.154h2.969V9.927c0-3.475,1.693-5,4.581-5 c1.383,0,2.115,0.103,2.461,0.149v2.753h-1.97c-1.226,0-1.654,1.163-1.654,2.473v1.724h3.593L16.73,15.18h-3.106v8.697 C19.481,23.083,24,18.075,24,12C24,5.373,18.627,0,12,0z" />
+              </svg>
+              <svg
+                fill="#000000"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24px"
+                height="24px"
+              >
+                <path d="M 24 4.300781 C 23.101563 4.699219 22.199219 5 21.199219 5.101563 C 22.199219 4.5 23 3.5 23.398438 2.398438 C 22.398438 3 21.398438 3.398438 20.300781 3.601563 C 19.300781 2.601563 18 2 16.601563 2 C 13.898438 2 11.699219 4.199219 11.699219 6.898438 C 11.699219 7.300781 11.699219 7.699219 11.800781 8 C 7.699219 7.800781 4.101563 5.898438 1.699219 2.898438 C 1.199219 3.601563 1 4.5 1 5.398438 C 1 7.101563 1.898438 8.601563 3.199219 9.5 C 2.398438 9.398438 1.601563 9.199219 1 8.898438 C 1 8.898438 1 8.898438 1 9 C 1 11.398438 2.699219 13.398438 4.898438 13.800781 C 4.5 13.898438 4.101563 14 3.601563 14 C 3.300781 14 3 14 2.699219 13.898438 C 3.300781 15.898438 5.101563 17.300781 7.300781 17.300781 C 5.601563 18.601563 3.5 19.398438 1.199219 19.398438 C 0.800781 19.398438 0.398438 19.398438 0 19.300781 C 2.199219 20.699219 4.800781 21.5 7.5 21.5 C 16.601563 21.5 21.5 14 21.5 7.5 C 21.5 7.300781 21.5 7.101563 21.5 6.898438 C 22.5 6.199219 23.300781 5.300781 24 4.300781" />
+              </svg>
             </div>
           </User>
           <p className="detail-text">
@@ -86,10 +100,29 @@ const Detail = ({ images, imagesArr }) => {
           </ul>
           <div className="share">
             <button className="share-buttons">
-              <FontAwesomeIcon icon={faFacebookF} /> Share on Facebook
+              <svg
+                fill="#000000"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24px"
+                height="24px"
+              >
+                {" "}
+                <path d="M12,0C5.373,0,0,5.373,0,12c0,6.016,4.432,10.984,10.206,11.852V15.18H7.237v-3.154h2.969V9.927c0-3.475,1.693-5,4.581-5 c1.383,0,2.115,0.103,2.461,0.149v2.753h-1.97c-1.226,0-1.654,1.163-1.654,2.473v1.724h3.593L16.73,15.18h-3.106v8.697 C19.481,23.083,24,18.075,24,12C24,5.373,18.627,0,12,0z" />
+              </svg>{" "}
+              Share on Facebook
             </button>
             <button className="share-buttons">
-              <FontAwesomeIcon icon={faTwitter} /> Share on Twitter
+              <svg
+                fill="#000000"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24px"
+                height="24px"
+              >
+                <path d="M 24 4.300781 C 23.101563 4.699219 22.199219 5 21.199219 5.101563 C 22.199219 4.5 23 3.5 23.398438 2.398438 C 22.398438 3 21.398438 3.398438 20.300781 3.601563 C 19.300781 2.601563 18 2 16.601563 2 C 13.898438 2 11.699219 4.199219 11.699219 6.898438 C 11.699219 7.300781 11.699219 7.699219 11.800781 8 C 7.699219 7.800781 4.101563 5.898438 1.699219 2.898438 C 1.199219 3.601563 1 4.5 1 5.398438 C 1 7.101563 1.898438 8.601563 3.199219 9.5 C 2.398438 9.398438 1.601563 9.199219 1 8.898438 C 1 8.898438 1 8.898438 1 9 C 1 11.398438 2.699219 13.398438 4.898438 13.800781 C 4.5 13.898438 4.101563 14 3.601563 14 C 3.300781 14 3 14 2.699219 13.898438 C 3.300781 15.898438 5.101563 17.300781 7.300781 17.300781 C 5.601563 18.601563 3.5 19.398438 1.199219 19.398438 C 0.800781 19.398438 0.398438 19.398438 0 19.300781 C 2.199219 20.699219 4.800781 21.5 7.5 21.5 C 16.601563 21.5 21.5 14 21.5 7.5 C 21.5 7.300781 21.5 7.101563 21.5 6.898438 C 22.5 6.199219 23.300781 5.300781 24 4.300781" />
+              </svg>
+              Share on Twitter
             </button>
           </div>
         </Content>
@@ -198,7 +231,7 @@ const PrimarySection = styled.div`
   }
   .detail-image {
     width: 100%;
-    height: ${({ isMobile }) => (!isMobile ? "1200px" : "400px")};
+    height: ${({ width }) => (width > 768 ? "400px" : "1200px")};
     object-fit: cover;
   }
 `;
@@ -284,7 +317,10 @@ const Content = styled.div`
   .share {
     display: flex;
     justify-content: center;
+
     .share-buttons {
+      display: flex;
+      align-items: center;
       background-color: transparent;
       border: none;
       font-family: PT Serif;
@@ -325,6 +361,7 @@ const User = styled.div`
     flex-direction: column;
     margin-left: 1em;
     justify-content: center;
+    color: #000000;
     @media (max-width: 740px) {
       font-size: 0.6em;
     }
@@ -342,19 +379,15 @@ const User = styled.div`
     font-weight: normal;
     font-size: 16px;
     line-height: 21px;
-
-    color: #000000;
   }
   .Icons {
     svg {
-      background: #ffffff;
       border: 1px solid #eaeaea;
       box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.08);
       border-radius: 4px;
       padding: 0.5em 1.3em;
-      @media (max-width: 740px) {
-        font-size: 0.6em;
-      }
+      width: 15px;
+      height: 15px;
       @media (max-width: 280px) {
         font-size: 0.4em;
         padding: 0.5em 1em;
@@ -379,7 +412,7 @@ const Ads = styled.div`
 
   img {
     width: 100%;
-    height: 400px;
+    height: 250px;
     object-fit: cover;
   }
 `;
@@ -387,11 +420,10 @@ const Ads = styled.div`
 const MostPopular = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   margin: 3em 2em;
 
   .popular-title {
-    text-align;
     font-family: PT Sans;
     font-style: normal;
     font-weight: bold;
@@ -404,7 +436,7 @@ const MostPopular = styled.div`
     position: absolute;
     top: 20px;
     left: 20px;
-    background: #4A90E2;
+    background: #4a90e2;
     padding: 0.2em 0.5em;
     border-radius: 0.5em;
     font-size: 12px;
@@ -457,11 +489,8 @@ const MostPopular = styled.div`
     }
     img {
       width: 100%;
-      height: 11em;
+      height: 17em;
       object-fit: cover;
-      @media (max-width: 768px) {
-        height: 15em;
-      }
     }
   }
 `;
