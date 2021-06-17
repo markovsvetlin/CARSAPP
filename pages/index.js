@@ -14,7 +14,9 @@ const Home = (images) => {
 
   return (
     <>
-      {width > 812 ? (
+      {width < 812 ? (
+        <Carousel images={imagesArr} />
+      ) : (
         <PrimarySection>
           {imagesArr?.slice(4, 5)?.map((image, index) => {
             return <Post type={"primary"} key={index} image={image} />;
@@ -26,8 +28,6 @@ const Home = (images) => {
             })}
           </RightSection>
         </PrimarySection>
-      ) : (
-        <Carousel images={imagesArr} />
       )}
       <RestContent>
         <div style={{ width: "100%" }}>
